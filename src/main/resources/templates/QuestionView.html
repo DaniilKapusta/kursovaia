@@ -1,0 +1,60 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Тест</title>
+</head>
+<body background="images/bg1.png" bgproperties="fixed">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Здравствуйте, <span th:text="${studentName}">ИВАН</span>!</h1>
+        <p class="lead"><p> Внимательно читайте текст вопроса. В каждом вопросе 1 вариант ответа.</p>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+    <div class="col">
+
+    </div>
+
+        <div class="col-md-auto">
+
+
+<form method="POST"
+    action="questEnd" modelAttribute="questEnd">
+    <th:block th:each="user,iterStat: ${quest}" th:class="${iterStat.odd}? 'odd'">
+            <p><h5>Вопрос № <span th:text="${iterStat.count}">...</span> из <span th:text="${questionCount}">...</span> </h5></p>
+            <p> <b th:text="${user.name}">Question </b> </p>
+        <div class="form-check">
+        <p th:each="answer : ${user.answers}">
+
+
+                 <input type="radio" th:name ="${user.questionId}" th:id="${answer.key}" th:value = "${answer.key}">
+            <label th:for = "${answer.key}" th:text="${answer.value}"> </label>
+
+        </p>
+        </div>
+<hr>
+
+
+    </th:block>
+    <input type="text" th:value="${student1}" name="studentId" id="studentId" hidden="true">
+    <input type="text" th:value="${questionCount}" name="questionCount" id="questionCount" hidden="true">
+
+        <button type="submit" class="btn btn-primary" style="width:150px; height:70px;">Отправить</button>
+</form>
+
+        </div>
+        <div class="col">
+
+        </div>
+</div>
+</div>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
+<script src="/js/jquery-3.4.1.js"></script>
+</body>
+</html>

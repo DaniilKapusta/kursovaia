@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Создание вопроса</title>
+</head>
+<body background="images/bg1.png" bgproperties="fixed">
+<div class="container" >
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col-md-auto">
+
+
+<form method="POST"
+      action="questCreated" modelAttribute="addQuest">
+        <div class="form-group">
+            <h3>Создание вопроса</h3>
+         <label for = "name">Введите текст вопроса</label>
+            <input type="text" class="form-control" name ="name", id="name" required>
+
+       <p> <label for = "opt1">Введите Вариант ответа</label>
+        <input type="text" class="form-control" name ="opt1", id="opt1" required>
+            <input type="radio" name ="correctOption", id="correctOption1" value = "opt1" checked="true">
+           <label for = "correctOption1">Верный вариант ответа</label>
+       </p>
+            <p>  <label for = "opt2">Введите вариант ответа</label>
+            <input type="text" class="form-control" name ="opt2", id="opt2" required>
+            <input type="radio" name ="correctOption", id="correctOption2" value = "opt2">
+                <label for = "correctOption2">Верный вариант ответа</label>
+            </p>
+
+            <p>  <label for = "opt3">Введите Вариант ответа</label>
+            <input type="text" class="form-control" name ="opt3", id="opt3" required>
+            <input type="radio" name ="correctOption", id="correctOption3" value = "opt3">
+                <label for = "correctOption3">Верный вариант ответа</label>
+            </p>
+            <p>   <label for = "opt4">Введите вариант ответа</label>
+            <input type="text" class="form-control" name ="opt4", id="opt4" required>
+            <input type="radio" name ="correctOption", id="correctOption4" value = "opt4" >
+                <label for = "correctOption4">Верный вариант ответа</label>
+            </p>
+        </div>
+    <input type="submit" class="btn btn-primary" value="Создать вопрос">
+</form>
+
+            <hr>
+            <p><a class="btn btn-primary" href="teacher" role="button">Вернуться к интерфейсу учителя</a></p>
+            <hr>
+            <p><a class="btn btn-secondary" href="index" role="button">Вернуться к выбору пользователя</a></p>
+
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+</div>
+<script href="/js/bootstrap.min.js"></script>
+<script href="/js/bootstrap.bundle.js"></script>
+<script href="/js/jquery-3.4.1.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Конец теста</title>
+</head>
+<body background="images/bg1.png" bgproperties="fixed">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Статистика теста</h1>
+        <p class="lead">Вы прошли тест. Теперь вы можете посмотреть результаты.</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col">
+<table>
+<th:block th:each="stat,iterStat : ${answerStat}" th:class="${iterStat.odd}? 'odd'">
+<tr>
+
+     <td><h4>Вопрос № <span th:text="${iterStat.count}"></span></h4> <p th:text="${stat.questionBody}">
+         <h4>Ваш ответ </h4> <p th:text="${stat.pickAnswerBody}">
+         <h4>Правильный ответ </h4>  <p th:text="${stat.CorrectAnswer}">
+         <hr>
+    </td>
+</tr>
+</th:block>
+</table>
+           <p> <h4>Кол-во правльных ответов: <span th:text="${correctAnswers}">...</span> из   <span th:text="${questionCount}">...</span></h4></p>
+
+            <p><h4>Оценка: <span th:text="${mark}">...</span></h4></p>
+        </div>
+
+</div>
+</div>
+<hr>
+<a class="btn btn-primary" href="index" role="button">Вернуться к выбору пользователя</a>
+<script href="/js/bootstrap.min.js"></script>
+<script href="/js/bootstrap.bundle.js"></script>
+<script href="/js/jquery-3.4.1.js"></script>
+</body>
+</html>

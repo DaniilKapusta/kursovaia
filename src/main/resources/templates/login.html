@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <title>Вход в аккаунт</title>
+</head>
+<body background="images/bg1.png" bgproperties="fixed">
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <h4>Введите логин и пароль учителя.</h4>
+
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+<div th:if="${param.error}">
+    Неверный логин или пароль
+</div>
+<div th:if="${param.logout}">
+    Вы успешно вышли из аккаунта
+</div>
+<form th:action="@{/login}" method="post">
+    <div><label> Логин: <input type="text" name="username"/> </label></div>
+    <div><label> Пароль: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" class="btn btn-primary" value="Войти"/></div>
+</form>
+
+        </div>
+        <div class="col"></div>
+    </div>
+        <div class="row">
+            <div class="col"> </div>
+            <div class="col">
+                <hr>
+                <p><a class="btn btn-secondary" href="index" role="button">Вернуться к выбору пользователя</a></p>
+            </div>
+            <div class="col"> </div>
+        </div>
+</div>
+<script href="/js/bootstrap.min.js"></script>
+<script href="/js/bootstrap.bundle.js"></script>
+<script href="/js/jquery-3.4.1.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Ввод данных студента</title>
+    </head>
+<body background="images/bg1.png" bgproperties="fixed">
+<div class="container">
+
+    <div class="row align-items-center">
+        <div class="col">
+
+        </div>
+    <div class="col-md-auto">
+<h3>Перед началом теста введите свои данные</h3>
+        <hr>
+<form method="POST"
+      action="QuestionView" modelAttribute="student">
+
+       <fieldset>
+      <p> <label for = "name">Введите имя и фамилию</label>
+          <input type="text" name ="name", id="name" required pattern="[A-Za-zА-Яа-яЁё]{2,}\s[A-Za-zА-Яа-яЁё]{2,}"> </p>
+      <p> <label for = "studentsGroup" >Введите группу</label>
+          <input type="text" name ="studentsGroup", id="studentsGroup" required pattern="[1-4][\-][0-9]{2}"></p>
+     <p>  <label for = "branch">Введите отделение</label>
+         <input type="text" name ="branch", id="branch" required pattern="[A-ZА-ЯЁ]{2,5}"> </p>
+    </fieldset>
+    <input type="submit" value="Начать тест">
+</form>
+    </div>
+        <div class="col">
+
+        </div>
+</div>
+    <hr>
+    <p><a class="btn btn-primary" href="index" role="button">Вернуться к выбору пользователя</a></p>
+</div>
+<script href="/js/bootstrap.min.js"></script>
+<script href="/js/bootstrap.bundle.js"></script>
+<script href="/js/jquery-3.4.1.js"></script>
+</body>
+</html>
