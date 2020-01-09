@@ -13,9 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import test.repository.AnswersDAO;
 import test.DTO.QuestDTO;
 import test.repository.QuestionRepository;
-import test.repository.StudentRepository;
 import test.entity.AnswersEntity;
 import test.entity.Student;
+import test.usecase.FindStudent;
+import test.usecase.SaveStudent;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,6 +25,9 @@ import java.util.*;
 @Controller
 public class StudentController {
     Logger logger = LoggerFactory.getLogger(StudentController.class);
+
+    public StudentController() {
+    }
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public ModelAndView showForm() {
@@ -48,9 +52,11 @@ public class StudentController {
 
     @Autowired
     private AnswersDAO answersDAO;
-
     @Autowired
-    private StudentRepository studentRepository;
+    private FindStudent findStudent;
+    @Autowired
+    private SaveStudent save;
+
 
     //@ResponseBody
     @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
@@ -58,12 +64,13 @@ public class StudentController {
        /* if (result.hasErrors()) {
             return "error";
         } */
+
         Student student1 = new Student();
-        if (studentRepository.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch())==null) {
-        student1 = studentRepository.save(student);
+        if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null) {
+        student1 = save.saveStudent(student);
         }
                 else
-                    student1=studentRepository.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
+                    student1=findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
         logger.info(student.getName());
 
         List<QuestDTO> arrayDTO = new ArrayList<>();
