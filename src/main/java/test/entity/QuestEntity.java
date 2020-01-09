@@ -1,6 +1,6 @@
 package test.entity;
 
-import test.QuestDTO;
+import test.DTO.QuestDTO;
 
 import javax.persistence.*;
 

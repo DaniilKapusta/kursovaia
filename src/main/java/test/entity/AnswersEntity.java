@@ -1,10 +1,8 @@
 package test.entity;
 
-import test.QuestDTO;
+import test.DTO.QuestDTO;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Table(name = "Answers")
