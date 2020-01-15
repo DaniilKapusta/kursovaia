@@ -4,16 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import test.repository.AnswersDAO;
 import test.DTO.QuestDTO;
-import test.repository.QuestionRepository;
 import test.entity.AnswersEntity;
 import test.entity.Student;
 import test.usecase.FindAnswers;
@@ -23,7 +20,9 @@ import test.usecase.SaveStudent;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -36,19 +35,7 @@ public class StudentController {
     public ModelAndView showForm() {
         return new ModelAndView("student", "student", new Student());
     }
-/*
-   @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("student") Student student, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            return "error";
-        }
-        logger.info("student name " + student.getName());
-        model.addAttribute("name", student.getName());
-        model.addAttribute("group", student.getStudentsGroup());
-        model.addAttribute("branch", student.getBranch());
-        return "QuestionView";
-    }
-*/
+
 @Autowired
     private FindQuestion findQuestion;
 @Autowired
@@ -58,13 +45,9 @@ public class StudentController {
 @Autowired
     private SaveStudent save;
 
-
-    //@ResponseBody
     @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("student") Student student, BindingResult result, ModelMap model, HttpServletRequest req) {
-       /* if (result.hasErrors()) {
-            return "error";
-        } */
+
         logger.info("student = "+student.getName());
         Student student1;
         if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
@@ -75,11 +58,11 @@ public class StudentController {
         logger.info("student = "+student1.getName());
         List<QuestDTO> arrayDTO = new ArrayList<>();
         findQuestion.getRandomQuestions().forEach(  setA -> {
-          // arrayAE.addAll(answersDAO.findByQuestionIdLike(setA.getId()));
+
             QuestDTO questDTO = new QuestDTO();
             questDTO.setName(setA.getName());
             questDTO.setQuestionId(setA.getId());
-           // questDTO.setAnswers(answersDAO.findByQuestionIdLike(setA.getId()));
+
             List<AnswersEntity> answersEntities = findAnswers.findByQuestionIdLike(setA.getId());
             questDTO.setAnswers(new HashMap<>());
             answersEntities.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
@@ -97,29 +80,6 @@ public class StudentController {
             model.addAttribute("error",error);
             return "errorSmallSize";
         }
-
-        /*
-        Iterable<AnswersEntity> allAnswers = arrayAE;
-
-      //  Iterable<AnswersEntity> allAnswers = answersDAO.findAll();
-        ArrayList<QuestDTO> arrayDTO = new ArrayList<>();
-        for (QuestEntity entity : all ) {
-            ArrayList<String> answersToDTO = new ArrayList<>();
-            QuestDTO questDTO = new QuestDTO();
-            questDTO.setName(entity.getName());
-            for (AnswersEntity answers : allAnswers) {
-               if (answers.getQuestionId() == entity.getId()) {
-                    answersToDTO.add(answers.getBody());
-                }
-            }
-            questDTO.setAnswers(answersToDTO);
-            arrayDTO.add(questDTO);
-            logger.info("query = " + questDTO.getName());
-            logger.info("query = " + questDTO.getAnswers());
-          //  answersToDTO.clear();
-        }
-        model.addAttribute("quest",arrayDTO);
-*/
         return "QuestionView";
     }
 }

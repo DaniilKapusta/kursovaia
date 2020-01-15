@@ -13,5 +13,8 @@ public final class FindQuestion {
     public List<QuestEntity> getRandomQuestions(){
         return questionRepository.getRandomQueries();
     }
+    public QuestEntity findByIdLike(Long id) {
+        return questionRepository.findByIdLike(id);
+    }
 
 }

@@ -12,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestEntity, Long> {
+
+     QuestEntity findByIdLike(Long id);
     @Query(value = "SELECT * FROM QUEST ORDER BY RANDOM() LIMIT 10", nativeQuery = true)
     List<QuestEntity> getRandomQueries();
 

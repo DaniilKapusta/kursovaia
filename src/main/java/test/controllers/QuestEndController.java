@@ -13,10 +13,8 @@ import test.DTO.AnswersStatDTO;
 import test.entity.AnswersEntity;
 import test.entity.QuestEntity;
 import test.entity.TestResultEntity;
-import test.repository.AnswersDAO;
-import test.repository.QuestionDAO;
-import test.repository.StudentRepository;
-import test.repository.TestResultRepository;
+import test.repository.*;
+import test.usecase.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -25,20 +23,23 @@ import java.util.*;
 @Controller
 public class QuestEndController {
 
-    Logger logger = LoggerFactory.getLogger(QuestEndController.class);
+    private Logger logger = LoggerFactory.getLogger(QuestEndController.class);
 
 
     @Autowired
-    private QuestionDAO questionDAO;
+    private FindQuestion findQuestion;
 
     @Autowired
-    private AnswersDAO answersDAO;
+    private FindAnswers findAnswers;
 
     @Autowired
-    private TestResultRepository testResultRepository;
+    private FindTestResult findTestResult;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private FindStudent findStudent;
+
+    @Autowired
+    private SaveTestResult saveTestResult;
 
 
     @RequestMapping(value = "/questEnd", method = RequestMethod.POST)
@@ -48,7 +49,7 @@ public class QuestEndController {
         }
         Map<String, String[]> pickAnswers = req.getParameterMap();
         for (String key : pickAnswers.keySet()) {
-            String[] strArr = (String[]) pickAnswers.get(key);
+            String[] strArr = pickAnswers.get(key);
             for (String val : strArr) {
                 logger.info(key + " = " + val);
             }
@@ -61,7 +62,7 @@ public class QuestEndController {
         Long idQuest;
 
         for (String key : pickAnswers.keySet()) {
-            String[] strArr = (String[]) pickAnswers.get(key);
+            String[] strArr = pickAnswers.get(key);
             for (String val : strArr) {
                 AnswersStatDTO answersStatDTO = new AnswersStatDTO();
                 try {
@@ -72,14 +73,14 @@ public class QuestEndController {
                     break;
                 }
 
-                AnswersEntity answersEntity = answersDAO.findByIdLike(id);
-                QuestEntity questEntity = questionDAO.findByIdLike(idQuest);
+                AnswersEntity answersEntity = findAnswers.findByIdLike(id);
+                QuestEntity questEntity = findQuestion.findByIdLike(idQuest);
                 answersStatDTO.setQuestionBody(questEntity.getName());
                 answersStatDTO.setPickAnswerBody(answersEntity.getBody());
                 if (answersEntity.getRight())
                     correct++;
 
-                answersDAO.findByQuestionIdLike(questEntity.getId()).forEach(st -> {
+                findAnswers.findByQuestionIdLike(questEntity.getId()).forEach(st -> {
                     if (st.getRight())
                         answersStatDTO.setCorrectAnswer(st.getBody());
                 });
@@ -114,7 +115,7 @@ public class QuestEndController {
             testResultEntity.setMark(mark);
             logger.info(String.valueOf(testResultEntity.getStudentId()));
             testResultEntity.setTestingDate(new java.sql.Date(System.currentTimeMillis()));
-            testResultRepository.save(testResultEntity);
+               saveTestResult.saveTestResult(testResultEntity);
 
             model.addAttribute("questionCount",testResultEntity.getQuestionCount());
             model.addAttribute("answerStat",answersStatDTOS);
