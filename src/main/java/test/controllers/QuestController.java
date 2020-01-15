@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import test.repository.AnswerRepository;
 import test.DTO.QuestDTO;
-import test.repository.QuestionRepository;
 import test.entity.AnswersEntity;
 import test.entity.QuestEntity;
+import test.usecase.SaveAnswer;
+import test.usecase.SaveQuestion;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,14 +23,13 @@ import java.util.Map;
 
 @Controller
 public class QuestController {
-    Logger logger = LoggerFactory.getLogger(StudentController.class);
+   private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private
-    QuestionRepository questionRepository;
+    private SaveQuestion saveQuestion;
 
     @Autowired
-    AnswerRepository answerRepository;
+    private SaveAnswer saveAnswer;
 
     @RequestMapping(value = "/addQuest", method = RequestMethod.GET)
     public ModelAndView showForm() {
@@ -46,7 +45,7 @@ public class QuestController {
 
         QuestEntity questEntity = new QuestEntity();
         questEntity.setName(answers.get("name")[0]);
-        QuestEntity savedQuestion = questionRepository.save(questEntity);
+        QuestEntity savedQuestion = saveQuestion.saveQuestion(questEntity);
 
         AnswersEntity answersEntity = new AnswersEntity();
         answersEntity.setBody(answers.get("opt1")[0]);
@@ -56,7 +55,7 @@ public class QuestController {
         } else {
             answersEntity.setRight(false);
         }
-        answerRepository.save(answersEntity);
+        saveAnswer.saveAnswer(answersEntity);
 
         AnswersEntity answersEntity2 = new AnswersEntity();
         answersEntity2.setBody(answers.get("opt2")[0]);
@@ -66,7 +65,7 @@ public class QuestController {
         } else {
             answersEntity2.setRight(false);
         }
-        answerRepository.save(answersEntity2);
+        saveAnswer.saveAnswer(answersEntity2);
 
         AnswersEntity answersEntity3 = new AnswersEntity();
         answersEntity3.setBody(answers.get("opt3")[0]);
@@ -76,7 +75,7 @@ public class QuestController {
         } else {
             answersEntity3.setRight(false);
         }
-        answerRepository.save(answersEntity3);
+        saveAnswer.saveAnswer(answersEntity3);
 
         AnswersEntity answersEntity4 = new AnswersEntity();
         answersEntity4.setBody(answers.get("opt4")[0]);
@@ -86,11 +85,11 @@ public class QuestController {
         } else {
             answersEntity4.setRight(false);
         }
-        answerRepository.save(answersEntity4);
+        saveAnswer.saveAnswer(answersEntity4);
 
 
         for (String key : answers.keySet()) {
-            String[] strArr = (String[]) answers.get(key);
+            String[] strArr = answers.get(key);
             for (String val : strArr) {
                 logger.info(key + " = " + val);
             }

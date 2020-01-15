@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import test.DTO.QueriesDTO;
-import test.repository.StudentRepository;
-import test.repository.TestResultRepository;
 import test.entity.TestResultEntity;
+import test.usecase.FindStudent;
+import test.usecase.FindTestResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Controller
 public class QueriesController {
 
-    Logger logger = LoggerFactory.getLogger(QueriesController.class);
+    private Logger logger = LoggerFactory.getLogger(QueriesController.class);
 
     @RequestMapping(value = "/queries", method = RequestMethod.GET)
     public ModelAndView showForm() {
@@ -34,10 +34,10 @@ public class QueriesController {
     }
 
     @Autowired
-    private StudentRepository studentRepository;
+    private FindStudent findStudent;
 
     @Autowired
-    private TestResultRepository testResultRepository;
+    private FindTestResult findTestResult;
 
     @RequestMapping(value = "/queriesFind", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("queries") QueriesDTO queriesDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
@@ -47,7 +47,7 @@ public class QueriesController {
 
         Map<String, String[]> pickAnswers = req.getParameterMap();
         for (String key : pickAnswers.keySet()) {
-            String[] strArr = (String[]) pickAnswers.get(key);
+            String[] strArr = pickAnswers.get(key);
             for (String val : strArr) {
                 if (key.equals("testingDate")) {
                     logger.info("in colc"+val);
@@ -69,10 +69,10 @@ public class QueriesController {
         List<QueriesDTO> queriesDTOList = new ArrayList<>();
         switch (queriesDTO.getFindMethod()) {
             case "findByName":
-                studentRepository.findByNameContainingIgnoreCase(queriesDTO.getStudentName()).forEach(st -> {
+                findStudent.findByNameContainingIgnoreCase(queriesDTO.getStudentName()).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(testResultRepository.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
+                    queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
                     queriesDTOList.add(queriesDTO1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по И.Ф.  "+queriesDTO.getStudentName());
@@ -80,10 +80,10 @@ public class QueriesController {
 
                 break;
             case "findByGroup":
-                studentRepository.findByStudentsGroupContainingIgnoreCase(queriesDTO.getStudentGroup()).forEach(st -> {
+                findStudent.findByStudentsGroupContainingIgnoreCase(queriesDTO.getStudentGroup()).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(testResultRepository.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
+                    queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
                     queriesDTOList.add(queriesDTO1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по группе  "+queriesDTO.getStudentGroup());
@@ -92,10 +92,10 @@ public class QueriesController {
                 break;
 
             case "findByBranch":
-                studentRepository.findByBranchContainingIgnoreCase(queriesDTO.getStudentBranch()).forEach(st -> {
+                findStudent.findByBranchContainingIgnoreCase(queriesDTO.getStudentBranch()).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(testResultRepository.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
+                    queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
                     queriesDTOList.add(queriesDTO1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по отделению  "+queriesDTO.getStudentBranch());
@@ -110,22 +110,22 @@ public class QueriesController {
                     return "queries";
                 }
 
-               testResultRepository.findByTestingDate(queriesDTO.getStudentDate()).forEach(st -> {
+                findTestResult.findByTestingDate(queriesDTO.getStudentDate()).forEach(st -> {
                   if (!findId.contains(st.getStudentId()))
                       findId.add(st.getStudentId());
                });
                    findId.forEach(st -> {
                        QueriesDTO queriesDTO1 = new QueriesDTO();
-                       queriesDTO1.setFindStudent(studentRepository.findByIdLike(st));
+                       queriesDTO1.setFindStudent(findStudent.findByIdLike(st));
                        List<TestResultEntity> tests = new ArrayList<>();
-                       testResultRepository.findByTestingDate(queriesDTO.getStudentDate()).forEach(qq -> {
+                       findTestResult.findByTestingDate(queriesDTO.getStudentDate()).forEach(qq -> {
                            if (qq.getStudentId().equals(st))
                            tests.add(qq);
                        });
                        queriesDTO1.setStudentResult(tests);
                        queriesDTOList.add(queriesDTO1);
                    });
-                   model.addAttribute("info","Результаты выборки студентов по дате за "+String.valueOf(queriesDTO.getStudentDate()));
+                   model.addAttribute("info","Результаты выборки студентов по дате за "+ queriesDTO.getStudentDate());
                 model.addAttribute("findStudents",queriesDTOList);
 
                 break;
