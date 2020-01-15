@@ -2,15 +2,16 @@ package test.repository;
 
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import test.entity.Student;
 
 import java.util.List;
-
+@Repository
 public interface StudentRepository extends CrudRepository<Student, Long> {
-    public Student findByIdLike(Long id);
-    public List<Student> findByNameContainingIgnoreCase(String name);
-    public List<Student> findByStudentsGroupContainingIgnoreCase(String studentsGroup);
-    public List<Student> findByBranchContainingIgnoreCase(String branch);
-    public Student findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch);
+     Student findByIdLike(Long id);
+     List<Student> findByNameContainingIgnoreCase(String name);
+     List<Student> findByStudentsGroupContainingIgnoreCase(String studentsGroup);
+     List<Student> findByBranchContainingIgnoreCase(String branch);
+     Student findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch);
 
 }

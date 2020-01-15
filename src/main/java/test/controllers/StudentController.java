@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,8 @@ import test.DTO.QuestDTO;
 import test.repository.QuestionRepository;
 import test.entity.AnswersEntity;
 import test.entity.Student;
+import test.usecase.FindAnswers;
+import test.usecase.FindQuestion;
 import test.usecase.FindStudent;
 import test.usecase.SaveStudent;
 
@@ -24,7 +27,7 @@ import java.util.*;
 
 @Controller
 public class StudentController {
-    Logger logger = LoggerFactory.getLogger(StudentController.class);
+    private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     public StudentController() {
     }
@@ -46,15 +49,13 @@ public class StudentController {
         return "QuestionView";
     }
 */
-
-    @Autowired
-    private QuestionRepository questionRepository;
-
-    @Autowired
-    private AnswersDAO answersDAO;
-    @Autowired
+@Autowired
+    private FindQuestion findQuestion;
+@Autowired
+    private FindAnswers findAnswers;
+@Autowired
     private FindStudent findStudent;
-    @Autowired
+@Autowired
     private SaveStudent save;
 
 
@@ -64,32 +65,30 @@ public class StudentController {
        /* if (result.hasErrors()) {
             return "error";
         } */
-
-        Student student1 = new Student();
-        if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null) {
-        student1 = save.saveStudent(student);
-        }
-                else
-                    student1=findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
-        logger.info(student.getName());
-
+        logger.info("student = "+student.getName());
+        Student student1;
+        if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
+            student1 = save.saveStudent(student);
+        else
+        student1=findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
+       if (student1 !=null)
+        logger.info("student = "+student1.getName());
         List<QuestDTO> arrayDTO = new ArrayList<>();
-        questionRepository.getRandomQueries().forEach(  setA -> {
+        findQuestion.getRandomQuestions().forEach(  setA -> {
           // arrayAE.addAll(answersDAO.findByQuestionIdLike(setA.getId()));
             QuestDTO questDTO = new QuestDTO();
             questDTO.setName(setA.getName());
             questDTO.setQuestionId(setA.getId());
            // questDTO.setAnswers(answersDAO.findByQuestionIdLike(setA.getId()));
-            List<AnswersEntity> answersEntities = answersDAO.findByQuestionIdLike(setA.getId());
+            List<AnswersEntity> answersEntities = findAnswers.findByQuestionIdLike(setA.getId());
             questDTO.setAnswers(new HashMap<>());
-            answersEntities.forEach(answer ->{
-                questDTO.getAnswers().put(answer.getId(),answer.getBody());
-            });
+            answersEntities.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
 
             arrayDTO.add(questDTO);
 
         } );
         model.addAttribute("quest",arrayDTO);
+        if (student1 != null)
         model.addAttribute("student1",student1.getId());
         model.addAttribute("questionCount",arrayDTO.size());
         model.addAttribute("studentName",student.getName());
