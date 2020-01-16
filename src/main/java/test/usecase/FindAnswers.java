@@ -27,7 +27,13 @@ public class FindAnswers {
         return answerDTOS;
     }
 
-    public AnswersEntity findByIdLike(Long id) {
-        return answerRepository.findByIdLike(id);
+    public AnswerDTO findByIdLike(Long id) {
+        AnswersEntity answersEntity = answerRepository.findByIdLike(id);
+        AnswerDTO answerDTO = new AnswerDTO();
+        answerDTO.setId(answersEntity.getId());
+        answerDTO.setRight(answersEntity.getRight());
+        answerDTO.setQuestionId(answersEntity.getQuestionId());
+        answerDTO.setBody(answersEntity.getBody());
+        return answerDTO;
     }
 }

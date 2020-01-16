@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
-import test.entity.AnswersEntity;
-import test.entity.QuestEntity;
+import test.DTO.QuestionDTO;
 import test.usecase.SaveAnswer;
 import test.usecase.SaveQuestion;
 
@@ -43,49 +43,49 @@ public class QuestController {
         }
         Map<String, String[]> answers = req.getParameterMap();
 
-        QuestEntity questEntity = new QuestEntity();
-        questEntity.setName(answers.get("name")[0]);
-        QuestEntity savedQuestion = saveQuestion.saveQuestion(questEntity);
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setName(answers.get("name")[0]);
+        QuestionDTO savedQuestion = saveQuestion.saveQuestion(questionDTO);
 
-        AnswersEntity answersEntity = new AnswersEntity();
-        answersEntity.setBody(answers.get("opt1")[0]);
-        answersEntity.setQuestionId(savedQuestion.getId());
+        AnswerDTO answerDTO = new AnswerDTO();
+        answerDTO.setBody(answers.get("opt1")[0]);
+        answerDTO.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt1")) {
-            answersEntity.setRight(true);
+            answerDTO.setRight(true);
         } else {
-            answersEntity.setRight(false);
+            answerDTO.setRight(false);
         }
-        saveAnswer.saveAnswer(answersEntity);
+        saveAnswer.saveAnswer(answerDTO);
 
-        AnswersEntity answersEntity2 = new AnswersEntity();
-        answersEntity2.setBody(answers.get("opt2")[0]);
-        answersEntity2.setQuestionId(savedQuestion.getId());
+        AnswerDTO answerDTO2 = new AnswerDTO();
+        answerDTO2.setBody(answers.get("opt2")[0]);
+        answerDTO2.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt2")) {
-            answersEntity2.setRight(true);
+            answerDTO2.setRight(true);
         } else {
-            answersEntity2.setRight(false);
+            answerDTO2.setRight(false);
         }
-        saveAnswer.saveAnswer(answersEntity2);
+        saveAnswer.saveAnswer(answerDTO2);
 
-        AnswersEntity answersEntity3 = new AnswersEntity();
-        answersEntity3.setBody(answers.get("opt3")[0]);
-        answersEntity3.setQuestionId(savedQuestion.getId());
+        AnswerDTO answerDTO3 = new AnswerDTO();
+        answerDTO3.setBody(answers.get("opt3")[0]);
+        answerDTO3.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt3")) {
-            answersEntity3.setRight(true);
+            answerDTO3.setRight(true);
         } else {
-            answersEntity3.setRight(false);
+            answerDTO3.setRight(false);
         }
-        saveAnswer.saveAnswer(answersEntity3);
+        saveAnswer.saveAnswer(answerDTO3);
 
-        AnswersEntity answersEntity4 = new AnswersEntity();
-        answersEntity4.setBody(answers.get("opt4")[0]);
-        answersEntity4.setQuestionId(savedQuestion.getId());
+        AnswerDTO answerDTO4 = new AnswerDTO();
+        answerDTO4.setBody(answers.get("opt4")[0]);
+        answerDTO4.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt4")) {
-            answersEntity4.setRight(true);
+            answerDTO4.setRight(true);
         } else {
-            answersEntity4.setRight(false);
+            answerDTO4.setRight(false);
         }
-        saveAnswer.saveAnswer(answersEntity4);
+        saveAnswer.saveAnswer(answerDTO4);
 
 
         for (String key : answers.keySet()) {

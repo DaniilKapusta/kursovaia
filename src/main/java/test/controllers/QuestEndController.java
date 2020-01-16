@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import test.DTO.AnswerDTO;
 import test.DTO.AnswersStatDTO;
-import test.entity.AnswersEntity;
-import test.entity.QuestEntity;
-import test.entity.TestResultEntity;
+import test.DTO.QuestionDTO;
+import test.DTO.TestResultDTO;
 import test.usecase.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class QuestEndController {
 
 
     @RequestMapping(value = "/questEnd", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("questEnd") TestResultEntity testResultEntity, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("questEnd") TestResultDTO testResultDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
         if (result.hasErrors()) {
             return "error";
         }
@@ -74,14 +74,14 @@ public class QuestEndController {
                     break;
                 }
 
-                AnswersEntity answersEntity = findAnswers.findByIdLike(id);
-                QuestEntity questEntity = findQuestion.findByIdLike(idQuest);
-                answersStatDTO.setQuestionBody(questEntity.getName());
-                answersStatDTO.setPickAnswerBody(answersEntity.getBody());
-                if (answersEntity.getRight())
+                AnswerDTO answerDTO = findAnswers.findByIdLike(id);
+                QuestionDTO questionDTO = findQuestion.findByIdLike(idQuest);
+                answersStatDTO.setQuestionBody(questionDTO.getName());
+                answersStatDTO.setPickAnswerBody(answerDTO.getBody());
+                if (answerDTO.getRight())
                     correct++;
 
-                findAnswers.findByQuestionIdLike(questEntity.getId()).forEach(st -> {
+                findAnswers.findByQuestionIdLike(questionDTO.getId()).forEach(st -> {
                     if (st.getRight())
                         answersStatDTO.setCorrectAnswer(st.getBody());
                 });
@@ -91,8 +91,8 @@ public class QuestEndController {
 
 
         int mark = 0;
-        double rightPercent = (double)correct/(double)testResultEntity.getQuestionCount()*100;
-        logger.info(String.valueOf(testResultEntity.getQuestionCount()));
+        double rightPercent = (double)correct/(double)testResultDTO.getQuestionCount()*100;
+        logger.info(String.valueOf(testResultDTO.getQuestionCount()));
         logger.info(String.valueOf(rightPercent));
 
         if (rightPercent < 30.0) {
@@ -112,13 +112,13 @@ public class QuestEndController {
                 model.addAttribute("mark","5"); }
 
            // testResultEntity.setStudentId();
-        testResultEntity.setCorrectAnswers(correct);
-            testResultEntity.setMark(mark);
-            logger.info(String.valueOf(testResultEntity.getStudentId()));
-            testResultEntity.setTestingDate(new java.sql.Date(System.currentTimeMillis()));
-               saveTestResult.saveTestResult(testResultEntity);
+        testResultDTO.setCorrectAnswers(correct);
+        testResultDTO.setMark(mark);
+        logger.info(String.valueOf(testResultDTO.getStudentId()));
+        testResultDTO.setTestingDate(new java.sql.Date(System.currentTimeMillis()));
+        saveTestResult.saveTestResult(testResultDTO);
 
-            model.addAttribute("questionCount",testResultEntity.getQuestionCount());
+            model.addAttribute("questionCount",testResultDTO.getQuestionCount());
             model.addAttribute("answerStat",answersStatDTOS);
         model.addAttribute("correctAnswers",correct);
 
