@@ -1,12 +1,12 @@
 package test.entity;
 
-import test.DTO.QuestDTO;
+
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="Quest")
-public class QuestEntity extends QuestDTO {
+public class QuestEntity  {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;

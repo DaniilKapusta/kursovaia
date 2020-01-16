@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
 import test.DTO.QuestionDTO;
-import test.usecase.SaveAnswer;
-import test.usecase.SaveQuestion;
+import test.service.SaveAnswer;
+import test.service.SaveQuestion;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

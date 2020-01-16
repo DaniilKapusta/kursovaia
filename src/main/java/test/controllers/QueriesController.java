@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import test.DTO.QueriesDTO;
 import test.DTO.TestResultDTO;
-import test.usecase.FindStudent;
-import test.usecase.FindTestResult;
+import test.service.FindStudent;
+import test.service.FindTestResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

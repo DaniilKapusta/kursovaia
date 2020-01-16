@@ -13,7 +13,7 @@ import test.DTO.AnswerDTO;
 import test.DTO.AnswersStatDTO;
 import test.DTO.QuestionDTO;
 import test.DTO.TestResultDTO;
-import test.usecase.*;
+import test.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

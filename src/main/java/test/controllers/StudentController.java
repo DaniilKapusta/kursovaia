@@ -13,10 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
 import test.DTO.StudentDTO;
-import test.usecase.FindAnswers;
-import test.usecase.FindQuestion;
-import test.usecase.FindStudent;
-import test.usecase.SaveStudent;
+import test.service.FindAnswers;
+import test.service.FindQuestion;
+import test.service.FindStudent;
+import test.service.SaveStudent;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
