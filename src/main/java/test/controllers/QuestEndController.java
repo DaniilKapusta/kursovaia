@@ -28,19 +28,13 @@ public class QuestEndController {
 
 
     @Autowired
-    private FindQuestion findQuestion;
+    private FindQuestionInterface findQuestionInterface;
 
     @Autowired
-    private FindAnswers findAnswers;
+    private FindAnswersInterface findAnswersInterface;
 
     @Autowired
-    private FindTestResult findTestResult;
-
-    @Autowired
-    private FindStudent findStudent;
-
-    @Autowired
-    private SaveTestResult saveTestResult;
+    private SaveTestResultInterface saveTestResultInterface;
 
 
     @RequestMapping(value = "/questEnd", method = RequestMethod.POST)
@@ -74,14 +68,14 @@ public class QuestEndController {
                     break;
                 }
 
-                AnswerDTO answerDTO = findAnswers.findByIdLike(id);
-                QuestionDTO questionDTO = findQuestion.findByIdLike(idQuest);
+                AnswerDTO answerDTO = findAnswersInterface.findByIdLike(id);
+                QuestionDTO questionDTO = findQuestionInterface.findByIdLike(idQuest);
                 answersStatDTO.setQuestionBody(questionDTO.getName());
                 answersStatDTO.setPickAnswerBody(answerDTO.getBody());
                 if (answerDTO.getRight())
                     correct++;
 
-                findAnswers.findByQuestionIdLike(questionDTO.getId()).forEach(st -> {
+                findAnswersInterface.findByQuestionIdLike(questionDTO.getId()).forEach(st -> {
                     if (st.getRight())
                         answersStatDTO.setCorrectAnswer(st.getBody());
                 });
@@ -116,7 +110,7 @@ public class QuestEndController {
         testResultDTO.setMark(mark);
         logger.info(String.valueOf(testResultDTO.getStudentId()));
         testResultDTO.setTestingDate(new java.sql.Date(System.currentTimeMillis()));
-        saveTestResult.saveTestResult(testResultDTO);
+        saveTestResultInterface.saveTestResult(testResultDTO);
 
             model.addAttribute("questionCount",testResultDTO.getQuestionCount());
             model.addAttribute("answerStat",answersStatDTOS);

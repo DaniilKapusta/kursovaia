@@ -13,8 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
 import test.DTO.QuestionDTO;
-import test.service.SaveAnswer;
-import test.service.SaveQuestion;
+import test.service.SaveAnswerInterface;
+import test.service.SaveQuestionInterface;
+import test.service.SaveQuestionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,10 +27,10 @@ public class QuestController {
    private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private SaveQuestion saveQuestion;
+    private SaveQuestionInterface saveQuestionInterface;
 
     @Autowired
-    private SaveAnswer saveAnswer;
+    private SaveAnswerInterface saveAnswerInterface;
 
     @RequestMapping(value = "/addQuest", method = RequestMethod.GET)
     public ModelAndView showForm() {
@@ -45,7 +46,7 @@ public class QuestController {
 
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setName(answers.get("name")[0]);
-        QuestionDTO savedQuestion = saveQuestion.saveQuestion(questionDTO);
+        QuestionDTO savedQuestion = saveQuestionInterface.saveQuestion(questionDTO);
 
         AnswerDTO answerDTO = new AnswerDTO();
         answerDTO.setBody(answers.get("opt1")[0]);
@@ -55,7 +56,7 @@ public class QuestController {
         } else {
             answerDTO.setRight(false);
         }
-        saveAnswer.saveAnswer(answerDTO);
+        saveAnswerInterface.saveAnswer(answerDTO);
 
         AnswerDTO answerDTO2 = new AnswerDTO();
         answerDTO2.setBody(answers.get("opt2")[0]);
@@ -65,7 +66,7 @@ public class QuestController {
         } else {
             answerDTO2.setRight(false);
         }
-        saveAnswer.saveAnswer(answerDTO2);
+        saveAnswerInterface.saveAnswer(answerDTO2);
 
         AnswerDTO answerDTO3 = new AnswerDTO();
         answerDTO3.setBody(answers.get("opt3")[0]);
@@ -75,7 +76,7 @@ public class QuestController {
         } else {
             answerDTO3.setRight(false);
         }
-        saveAnswer.saveAnswer(answerDTO3);
+        saveAnswerInterface.saveAnswer(answerDTO3);
 
         AnswerDTO answerDTO4 = new AnswerDTO();
         answerDTO4.setBody(answers.get("opt4")[0]);
@@ -85,7 +86,7 @@ public class QuestController {
         } else {
             answerDTO4.setRight(false);
         }
-        saveAnswer.saveAnswer(answerDTO4);
+        saveAnswerInterface.saveAnswer(answerDTO4);
 
 
         for (String key : answers.keySet()) {

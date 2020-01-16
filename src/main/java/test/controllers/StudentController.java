@@ -13,10 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
 import test.DTO.StudentDTO;
-import test.service.FindAnswers;
-import test.service.FindQuestion;
-import test.service.FindStudent;
-import test.service.SaveStudent;
+import test.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -37,33 +34,33 @@ public class StudentController {
     }
 
 @Autowired
-    private FindQuestion findQuestion;
+    private FindQuestionInterface findQuestionInterface;
 @Autowired
-    private FindAnswers findAnswers;
+    private FindAnswersInterface findAnswersInterface;
 @Autowired
-    private FindStudent findStudent;
+    private FindStudentInterface findStudentInterface;
 @Autowired
-    private SaveStudent save;
+    private SaveStudentInterface save;
 
     @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, ModelMap model, HttpServletRequest req) {
 
         logger.info("student = "+student.getName());
         StudentDTO student1;
-        if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
+        if (findStudentInterface.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
             student1 = save.saveStudent(student);
         else
-        student1=findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
+        student1= findStudentInterface.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
        if (student1 !=null)
         logger.info("student = "+student1.getName());
         List<QuestDTO> arrayDTO = new ArrayList<>();
-        findQuestion.getRandomQuestions().forEach(  setA -> {
+        findQuestionInterface.getRandomQuestions().forEach(setA -> {
 
             QuestDTO questDTO = new QuestDTO();
             questDTO.setName(setA.getName());
             questDTO.setQuestionId(setA.getId());
 
-            List<AnswerDTO> answerDTOS = findAnswers.findByQuestionIdLike(setA.getId());
+            List<AnswerDTO> answerDTOS = findAnswersInterface.findByQuestionIdLike(setA.getId());
             questDTO.setAnswers(new HashMap<>());
             answerDTOS.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
 
