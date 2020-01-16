@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import test.DTO.AnswerDTO;
 import test.DTO.QuestDTO;
-import test.entity.AnswersEntity;
-import test.entity.Student;
+import test.DTO.StudentDTO;
 import test.usecase.FindAnswers;
 import test.usecase.FindQuestion;
 import test.usecase.FindStudent;
@@ -33,7 +33,7 @@ public class StudentController {
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public ModelAndView showForm() {
-        return new ModelAndView("student", "student", new Student());
+        return new ModelAndView("student", "student", new StudentDTO());
     }
 
 @Autowired
@@ -46,10 +46,10 @@ public class StudentController {
     private SaveStudent save;
 
     @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("student") Student student, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, ModelMap model, HttpServletRequest req) {
 
         logger.info("student = "+student.getName());
-        Student student1;
+        StudentDTO student1;
         if (findStudent.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
             student1 = save.saveStudent(student);
         else
@@ -63,9 +63,9 @@ public class StudentController {
             questDTO.setName(setA.getName());
             questDTO.setQuestionId(setA.getId());
 
-            List<AnswersEntity> answersEntities = findAnswers.findByQuestionIdLike(setA.getId());
+            List<AnswerDTO> answerDTOS = findAnswers.findByQuestionIdLike(setA.getId());
             questDTO.setAnswers(new HashMap<>());
-            answersEntities.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
+            answerDTOS.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
 
             arrayDTO.add(questDTO);
 

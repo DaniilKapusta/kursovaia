@@ -13,7 +13,7 @@ public class AnswersEntity extends QuestDTO {
     private Long id;
     private String body;
 
-    public Long questionId;
+    private Long questionId;
     private Boolean isRight;
 
 

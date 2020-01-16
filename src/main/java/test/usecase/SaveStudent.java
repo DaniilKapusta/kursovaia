@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.DTO.StudentDTO;
 import test.entity.Student;
 import test.repository.StudentRepository;
 @Service
@@ -11,8 +12,13 @@ public final class SaveStudent {
     private Logger logger = LoggerFactory.getLogger(SaveStudent.class);
     @Autowired
     private StudentRepository studentRepository;
-    public Student saveStudent(Student student) {
+    public StudentDTO saveStudent(StudentDTO student) {
         logger.info("name1 = "+student.getName());
-       return studentRepository.save(student);
+        Student student1 = new Student();
+        student1.setName(student.getName());
+        student1.setStudentsGroup(student.getStudentsGroup());
+        student1.setBranch(student.getBranch());
+        student.setId(studentRepository.save(student1).getId());
+       return student;
     }
 }

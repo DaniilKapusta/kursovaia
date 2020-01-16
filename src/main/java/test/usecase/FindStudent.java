@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.DTO.StudentDTO;
 import test.entity.Student;
 import test.repository.StudentRepository;
 
@@ -28,7 +29,7 @@ public final class FindStudent {
     public List<Student> findByBranchContainingIgnoreCase(final String branch){
         return studentRepository.findByBranchContainingIgnoreCase(branch);
     }
-    public Student findByNameAndStudentsGroupAndBranchContainingIgnoreCase( String name,  String studentGroup,  String branch) {
+    public StudentDTO findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch) {
         logger.info("name2 = " + name);
         logger.info("gr2 = " + studentGroup);
         logger.info("br2 = " + branch);
@@ -39,7 +40,13 @@ public final class FindStudent {
               return null;
           }
         logger.info("HELLO EBAT");
-        return studentRepository.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(name, studentGroup, branch);
+        Student student = studentRepository.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(name, studentGroup, branch);
+         StudentDTO student1 = new StudentDTO();
+         student1.setId(student.getId());
+         student1.setName(student.getName());
+         student1.setBranch(student.getBranch());
+         student1.setStudentsGroup(student.getStudentsGroup());
+        return student1;
     }
 
     
