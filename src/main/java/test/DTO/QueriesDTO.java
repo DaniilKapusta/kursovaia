@@ -1,9 +1,6 @@
 package test.DTO;
 
 
-import test.entity.Student;
-import test.entity.TestResultEntity;
-
 import java.util.List;
 
 public class QueriesDTO {
@@ -14,25 +11,25 @@ public class QueriesDTO {
     private String studentBranch;
     private java.sql.Date studentDate;
 
-    private Student findStudent;
+    private StudentDTO findStudent;
 
-    public Student getFindStudent() {
+    public StudentDTO getFindStudent() {
         return findStudent;
     }
 
-    public void setFindStudent(Student findStudent) {
+    public void setFindStudent(StudentDTO findStudent) {
         this.findStudent = findStudent;
     }
 
-    public List<TestResultEntity> getStudentResult() {
+    public List<TestResultDTO> getStudentResult() {
         return studentResult;
     }
 
-    public void setStudentResult(List<TestResultEntity> studentResult) {
+    public void setStudentResult(List<TestResultDTO> studentResult) {
         this.studentResult = studentResult;
     }
 
-    private List<TestResultEntity> studentResult;
+    private List<TestResultDTO> studentResult;
 
     public String getFindMethod() {
         return findMethod;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import test.DTO.QueriesDTO;
-import test.entity.TestResultEntity;
+import test.DTO.TestResultDTO;
 import test.usecase.FindStudent;
 import test.usecase.FindTestResult;
 
@@ -22,6 +22,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class QueriesController {
@@ -69,7 +70,7 @@ public class QueriesController {
         List<QueriesDTO> queriesDTOList = new ArrayList<>();
         switch (queriesDTO.getFindMethod()) {
             case "findByName":
-                findStudent.findByNameContainingIgnoreCase(queriesDTO.getStudentName()).forEach(st -> {
+                Objects.requireNonNull(findStudent.findByNameContainingIgnoreCase(queriesDTO.getStudentName())).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
                     queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
@@ -80,7 +81,7 @@ public class QueriesController {
 
                 break;
             case "findByGroup":
-                findStudent.findByStudentsGroupContainingIgnoreCase(queriesDTO.getStudentGroup()).forEach(st -> {
+                Objects.requireNonNull(findStudent.findByStudentsGroupContainingIgnoreCase(queriesDTO.getStudentGroup())).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
                     queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
@@ -92,7 +93,7 @@ public class QueriesController {
                 break;
 
             case "findByBranch":
-                findStudent.findByBranchContainingIgnoreCase(queriesDTO.getStudentBranch()).forEach(st -> {
+                Objects.requireNonNull(findStudent.findByBranchContainingIgnoreCase(queriesDTO.getStudentBranch())).forEach(st -> {
                     QueriesDTO queriesDTO1 = new QueriesDTO();
                     queriesDTO1.setFindStudent(st);
                     queriesDTO1.setStudentResult(findTestResult.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
@@ -117,7 +118,7 @@ public class QueriesController {
                    findId.forEach(st -> {
                        QueriesDTO queriesDTO1 = new QueriesDTO();
                        queriesDTO1.setFindStudent(findStudent.findByIdLike(st));
-                       List<TestResultEntity> tests = new ArrayList<>();
+                       List<TestResultDTO> tests = new ArrayList<>();
                        findTestResult.findByTestingDate(queriesDTO.getStudentDate()).forEach(qq -> {
                            if (qq.getStudentId().equals(st))
                            tests.add(qq);

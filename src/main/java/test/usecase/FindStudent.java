@@ -8,6 +8,7 @@ import test.DTO.StudentDTO;
 import test.entity.Student;
 import test.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public final class FindStudent {
@@ -16,18 +17,61 @@ public final class FindStudent {
     private StudentRepository studentRepository;
 
 
-    public Student findByIdLike(final Long id) {
-        return studentRepository.findByIdLike(id);
+    public StudentDTO findByIdLike(final Long id) {
+        Student student = studentRepository.findByIdLike(id);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentsGroup(student.getStudentsGroup());
+        studentDTO.setBranch(student.getBranch());
+        studentDTO.setName(student.getName());
+        studentDTO.setId(student.getId());
+        return studentDTO;
     }
 
-    public List<Student> findByNameContainingIgnoreCase(final String name) {
-        return studentRepository.findByNameContainingIgnoreCase(name);
+    public List<StudentDTO> findByNameContainingIgnoreCase(final String name) {
+        List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
+        if (students == null)
+            return null;
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        students.forEach(st -> {
+            StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setStudentsGroup(st.getStudentsGroup());
+            studentDTO.setBranch(st.getBranch());
+            studentDTO.setName(st.getName());
+            studentDTO.setId(st.getId());
+            studentDTOS.add(studentDTO);
+        });
+        return studentDTOS;
+
     }
-    public List<Student> findByStudentsGroupContainingIgnoreCase(final String studentsGroup) {
-        return studentRepository.findByStudentsGroupContainingIgnoreCase(studentsGroup);
+    public List<StudentDTO> findByStudentsGroupContainingIgnoreCase(final String studentsGroup) {
+        List<Student> students = studentRepository.findByStudentsGroupContainingIgnoreCase(studentsGroup);
+        if (students == null)
+            return null;
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        students.forEach(st -> {
+            StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setStudentsGroup(st.getStudentsGroup());
+            studentDTO.setBranch(st.getBranch());
+            studentDTO.setName(st.getName());
+            studentDTO.setId(st.getId());
+            studentDTOS.add(studentDTO);
+        });
+        return studentDTOS;
     }
-    public List<Student> findByBranchContainingIgnoreCase(final String branch){
-        return studentRepository.findByBranchContainingIgnoreCase(branch);
+    public List<StudentDTO> findByBranchContainingIgnoreCase(final String branch){
+        List<Student> students = studentRepository.findByBranchContainingIgnoreCase(branch);
+        if (students == null)
+            return null;
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        students.forEach(st -> {
+            StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setStudentsGroup(st.getStudentsGroup());
+            studentDTO.setBranch(st.getBranch());
+            studentDTO.setName(st.getName());
+            studentDTO.setId(st.getId());
+            studentDTOS.add(studentDTO);
+        });
+        return studentDTOS;
     }
     public StudentDTO findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch) {
         logger.info("name2 = " + name);
