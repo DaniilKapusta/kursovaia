@@ -1,7 +1,7 @@
 package test.service;
 
-import test.DTO.StudentDTO;
+import test.Dto.StudentDto;
 
 public interface SaveStudentInterface {
-     StudentDTO saveStudent(StudentDTO student);
+     StudentDto saveStudent(StudentDto student);
 }

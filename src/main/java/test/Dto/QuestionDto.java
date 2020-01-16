@@ -1,13 +1,13 @@
-package test.DTO;
+package test.Dto;
 
-public class QuestionDTO {
+public class QuestionDto {
     private Long id;
 
     private String name;
 
 
 
-    public QuestionDTO() {
+    public QuestionDto() {
 
     }
 

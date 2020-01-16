@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import test.DTO.AnswerDTO;
-import test.DTO.QuestDTO;
-import test.DTO.QuestionDTO;
+import test.Dto.AnswerDto;
+import test.Dto.QuestDto;
+import test.Dto.QuestionDto;
 import test.service.SaveAnswerInterface;
 import test.service.SaveQuestionInterface;
-import test.service.SaveQuestionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,21 +33,21 @@ public class QuestController {
 
     @RequestMapping(value = "/addQuest", method = RequestMethod.GET)
     public ModelAndView showForm() {
-        return new ModelAndView("addQuest", "addQuest", new QuestDTO());
+        return new ModelAndView("addQuest", "addQuest", new QuestDto());
     }
 
     @RequestMapping(value = "/questCreated", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("addQuest") QuestDTO quest, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("addQuest") QuestDto quest, BindingResult result, ModelMap model, HttpServletRequest req) {
         if (result.hasErrors()) {
             return "error";
         }
         Map<String, String[]> answers = req.getParameterMap();
 
-        QuestionDTO questionDTO = new QuestionDTO();
+        QuestionDto questionDTO = new QuestionDto();
         questionDTO.setName(answers.get("name")[0]);
-        QuestionDTO savedQuestion = saveQuestionInterface.saveQuestion(questionDTO);
+        QuestionDto savedQuestion = saveQuestionInterface.saveQuestion(questionDTO);
 
-        AnswerDTO answerDTO = new AnswerDTO();
+        AnswerDto answerDTO = new AnswerDto();
         answerDTO.setBody(answers.get("opt1")[0]);
         answerDTO.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt1")) {
@@ -58,35 +57,35 @@ public class QuestController {
         }
         saveAnswerInterface.saveAnswer(answerDTO);
 
-        AnswerDTO answerDTO2 = new AnswerDTO();
-        answerDTO2.setBody(answers.get("opt2")[0]);
-        answerDTO2.setQuestionId(savedQuestion.getId());
+        AnswerDto answerDto2 = new AnswerDto();
+        answerDto2.setBody(answers.get("opt2")[0]);
+        answerDto2.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt2")) {
-            answerDTO2.setRight(true);
+            answerDto2.setRight(true);
         } else {
-            answerDTO2.setRight(false);
+            answerDto2.setRight(false);
         }
-        saveAnswerInterface.saveAnswer(answerDTO2);
+        saveAnswerInterface.saveAnswer(answerDto2);
 
-        AnswerDTO answerDTO3 = new AnswerDTO();
-        answerDTO3.setBody(answers.get("opt3")[0]);
-        answerDTO3.setQuestionId(savedQuestion.getId());
+        AnswerDto answerDto3 = new AnswerDto();
+        answerDto3.setBody(answers.get("opt3")[0]);
+        answerDto3.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt3")) {
-            answerDTO3.setRight(true);
+            answerDto3.setRight(true);
         } else {
-            answerDTO3.setRight(false);
+            answerDto3.setRight(false);
         }
-        saveAnswerInterface.saveAnswer(answerDTO3);
+        saveAnswerInterface.saveAnswer(answerDto3);
 
-        AnswerDTO answerDTO4 = new AnswerDTO();
-        answerDTO4.setBody(answers.get("opt4")[0]);
-        answerDTO4.setQuestionId(savedQuestion.getId());
+        AnswerDto answerDto4 = new AnswerDto();
+        answerDto4.setBody(answers.get("opt4")[0]);
+        answerDto4.setQuestionId(savedQuestion.getId());
         if (answers.get("correctOption")[0].equals("opt4")) {
-            answerDTO4.setRight(true);
+            answerDto4.setRight(true);
         } else {
-            answerDTO4.setRight(false);
+            answerDto4.setRight(false);
         }
-        saveAnswerInterface.saveAnswer(answerDTO4);
+        saveAnswerInterface.saveAnswer(answerDto4);
 
 
         for (String key : answers.keySet()) {

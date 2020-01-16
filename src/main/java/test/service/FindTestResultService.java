@@ -2,7 +2,7 @@ package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.DTO.TestResultDTO;
+import test.Dto.TestResultDto;
 import test.entity.TestResultEntity;
 import test.repository.TestResultRepository;
 
@@ -16,22 +16,22 @@ public class FindTestResultService implements FindTestResultInterface {
     private TestResultRepository testResultRepository;
 
 
-    public List<TestResultDTO> findByStudentIdLike(Long studentId) {
+    public List<TestResultDto> findByStudentIdLike(Long studentId) {
         List<TestResultEntity> testResultEntities = testResultRepository.findByStudentIdLike(studentId);
-        List<TestResultDTO> testResultDTOS = new ArrayList<>();
-        testResultEntities.forEach(result -> testResultDTOS.add(mapTestResultEntityToDto(result)));
-        return testResultDTOS;
+        List<TestResultDto> testResultDtos = new ArrayList<>();
+        testResultEntities.forEach(result -> testResultDtos.add(mapTestResultEntityToDto(result)));
+        return testResultDtos;
     }
 
-    public List<TestResultDTO> findByTestingDate(Date testingDate) {
+    public List<TestResultDto> findByTestingDate(Date testingDate) {
         List<TestResultEntity> testResultEntities = testResultRepository.findByTestingDate(testingDate);
-        List<TestResultDTO> testResultDTOS = new ArrayList<>();
-        testResultEntities.forEach(result -> testResultDTOS.add(mapTestResultEntityToDto(result)));
-        return testResultDTOS;
+        List<TestResultDto> testResultDtos = new ArrayList<>();
+        testResultEntities.forEach(result -> testResultDtos.add(mapTestResultEntityToDto(result)));
+        return testResultDtos;
     }
 
-    private TestResultDTO mapTestResultEntityToDto(TestResultEntity testResultEntity) {
-        TestResultDTO testResultDTO = new TestResultDTO();
+    private TestResultDto mapTestResultEntityToDto(TestResultEntity testResultEntity) {
+        TestResultDto testResultDTO = new TestResultDto();
         testResultDTO.setId(testResultEntity.getId());
         testResultDTO.setCorrectAnswers(testResultEntity.getCorrectAnswers());
         testResultDTO.setMark(testResultEntity.getMark());

@@ -2,7 +2,7 @@ package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.DTO.TestResultDTO;
+import test.Dto.TestResultDto;
 import test.entity.TestResultEntity;
 import test.repository.TestResultRepository;
 
@@ -11,7 +11,7 @@ public class SaveTestResultService implements SaveTestResultInterface {
     @Autowired
     private TestResultRepository testResultRepository;
 
-    public void saveTestResult(TestResultDTO testResultDTO) {
+    public void saveTestResult(TestResultDto testResultDTO) {
         TestResultEntity testResultEntity = new TestResultEntity();
         testResultEntity.setCorrectAnswers(testResultDTO.getCorrectAnswers());
         testResultEntity.setMark(testResultDTO.getMark());

@@ -1,6 +1,6 @@
-package test.DTO;
+package test.Dto;
 
-public class AnswerDTO {
+public class AnswerDto {
     private Long id;
     private String body;
 
@@ -9,7 +9,7 @@ public class AnswerDTO {
 
 
 
-    public AnswerDTO() {
+    public AnswerDto() {
 
     }
 

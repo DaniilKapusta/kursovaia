@@ -3,7 +3,7 @@ package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.DTO.StudentDTO;
+import test.Dto.StudentDto;
 import test.entity.Student;
 import test.repository.StudentRepository;
 
@@ -15,37 +15,37 @@ public final class FindStudentService implements FindStudentInterface {
     private StudentRepository studentRepository;
 
 
-    public StudentDTO findByIdLike(final Long id) {
+    public StudentDto findByIdLike(final Long id) {
         Student student = studentRepository.findByIdLike(id);
         return mapStudentToDto(student);
     }
 
-    public List<StudentDTO> findByNameContainingIgnoreCase(final String name) {
+    public List<StudentDto> findByNameContainingIgnoreCase(final String name) {
         List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
         if (students == null)
             return null;
-        List<StudentDTO> studentDTOS = new ArrayList<>();
-        students.forEach(st -> studentDTOS.add(mapStudentToDto(st)));
-        return studentDTOS;
+        List<StudentDto> studentDtos = new ArrayList<>();
+        students.forEach(st -> studentDtos.add(mapStudentToDto(st)));
+        return studentDtos;
 
     }
-    public List<StudentDTO> findByStudentsGroupContainingIgnoreCase(final String studentsGroup) {
+    public List<StudentDto> findByStudentsGroupContainingIgnoreCase(final String studentsGroup) {
         List<Student> students = studentRepository.findByStudentsGroupContainingIgnoreCase(studentsGroup);
         if (students == null)
             return null;
-        List<StudentDTO> studentDTOS = new ArrayList<>();
-        students.forEach(st -> studentDTOS.add(mapStudentToDto(st)));
-        return studentDTOS;
+        List<StudentDto> studentDtos = new ArrayList<>();
+        students.forEach(st -> studentDtos.add(mapStudentToDto(st)));
+        return studentDtos;
     }
-    public List<StudentDTO> findByBranchContainingIgnoreCase(final String branch){
+    public List<StudentDto> findByBranchContainingIgnoreCase(final String branch){
         List<Student> students = studentRepository.findByBranchContainingIgnoreCase(branch);
         if (students == null)
             return null;
-        List<StudentDTO> studentDTOS = new ArrayList<>();
-        students.forEach(st -> studentDTOS.add(mapStudentToDto(st)));
-        return studentDTOS;
+        List<StudentDto> studentDtos = new ArrayList<>();
+        students.forEach(st -> studentDtos.add(mapStudentToDto(st)));
+        return studentDtos;
     }
-    public StudentDTO findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch) {
+    public StudentDto findByNameAndStudentsGroupAndBranchContainingIgnoreCase(String name, String studentGroup, String branch) {
         if (studentRepository.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(name, studentGroup, branch) == null)
         {
               return null;
@@ -54,8 +54,8 @@ public final class FindStudentService implements FindStudentInterface {
         return mapStudentToDto(student);
     }
 
-    private StudentDTO mapStudentToDto(Student student){
-        StudentDTO studentDTO = new StudentDTO();
+    private StudentDto mapStudentToDto(Student student){
+        StudentDto studentDTO = new StudentDto();
         studentDTO.setStudentsGroup(student.getStudentsGroup());
         studentDTO.setBranch(student.getBranch());
         studentDTO.setName(student.getName());

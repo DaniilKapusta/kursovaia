@@ -1,6 +1,6 @@
-package test.DTO;
+package test.Dto;
 
-public class AnswersStatDTO {
+public class AnswersStatDto {
 
    private String questionBody;
    private String pickAnswerBody;

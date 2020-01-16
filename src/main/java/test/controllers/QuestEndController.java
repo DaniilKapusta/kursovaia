@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import test.DTO.AnswerDTO;
-import test.DTO.AnswersStatDTO;
-import test.DTO.QuestionDTO;
-import test.DTO.TestResultDTO;
+import test.Dto.AnswerDto;
+import test.Dto.AnswersStatDto;
+import test.Dto.QuestionDto;
+import test.Dto.TestResultDto;
 import test.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class QuestEndController {
 
 
     @RequestMapping(value = "/questEnd", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("questEnd") TestResultDTO testResultDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("questEnd") TestResultDto testResultDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
         if (result.hasErrors()) {
             return "error";
         }
@@ -50,7 +50,7 @@ public class QuestEndController {
             }
         }
      int correct = 0;
-        List<AnswersStatDTO> answersStatDTOS = new ArrayList<>();
+        List<AnswersStatDto> answersStatDtos = new ArrayList<>();
 
 
         Long id ;
@@ -59,7 +59,7 @@ public class QuestEndController {
         for (String key : pickAnswers.keySet()) {
             String[] strArr = pickAnswers.get(key);
             for (String val : strArr) {
-                AnswersStatDTO answersStatDTO = new AnswersStatDTO();
+                AnswersStatDto answersStatDTO = new AnswersStatDto();
                 try {
                  idQuest = Long.parseLong(key);
                  id = Long.parseLong(val);
@@ -68,8 +68,8 @@ public class QuestEndController {
                     break;
                 }
 
-                AnswerDTO answerDTO = findAnswersInterface.findByIdLike(id);
-                QuestionDTO questionDTO = findQuestionInterface.findByIdLike(idQuest);
+                AnswerDto answerDTO = findAnswersInterface.findByIdLike(id);
+                QuestionDto questionDTO = findQuestionInterface.findByIdLike(idQuest);
                 answersStatDTO.setQuestionBody(questionDTO.getName());
                 answersStatDTO.setPickAnswerBody(answerDTO.getBody());
                 if (answerDTO.getRight())
@@ -79,7 +79,7 @@ public class QuestEndController {
                     if (st.getRight())
                         answersStatDTO.setCorrectAnswer(st.getBody());
                 });
-                answersStatDTOS.add(answersStatDTO);
+                answersStatDtos.add(answersStatDTO);
             }
         }
 
@@ -113,7 +113,7 @@ public class QuestEndController {
         saveTestResultInterface.saveTestResult(testResultDTO);
 
             model.addAttribute("questionCount",testResultDTO.getQuestionCount());
-            model.addAttribute("answerStat",answersStatDTOS);
+            model.addAttribute("answerStat", answersStatDtos);
         model.addAttribute("correctAnswers",correct);
 
 

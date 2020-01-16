@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import test.DTO.QueriesDTO;
-import test.DTO.TestResultDTO;
+import test.Dto.QueriesDto;
+import test.Dto.TestResultDto;
 import test.service.FindStudentInterface;
 import test.service.FindTestResultInterface;
 
@@ -31,7 +31,7 @@ public class QueriesController {
 
     @RequestMapping(value = "/queries", method = RequestMethod.GET)
     public ModelAndView showForm() {
-        return new ModelAndView("queries", "queries", new QueriesDTO());
+        return new ModelAndView("queries", "queries", new QueriesDto());
     }
 
     @Autowired
@@ -41,7 +41,7 @@ public class QueriesController {
     private FindTestResultInterface findTestResultInterface;
 
     @RequestMapping(value = "/queriesFind", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("queries") QueriesDTO queriesDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("queries") QueriesDto queriesDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
         if (result.hasErrors()) {
             return "error";
         }
@@ -67,40 +67,40 @@ public class QueriesController {
         }
         logger.info(String.valueOf(queriesDTO.getStudentDate()));
 
-        List<QueriesDTO> queriesDTOList = new ArrayList<>();
+        List<QueriesDto> queriesDtoList = new ArrayList<>();
         switch (queriesDTO.getFindMethod()) {
             case "findByName":
                 Objects.requireNonNull(findStudentInterface.findByNameContainingIgnoreCase(queriesDTO.getStudentName())).forEach(st -> {
-                    QueriesDTO queriesDTO1 = new QueriesDTO();
-                    queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
-                    queriesDTOList.add(queriesDTO1);
+                    QueriesDto queriesDto1 = new QueriesDto();
+                    queriesDto1.setFindStudent(st);
+                    queriesDto1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDto1.getFindStudent().getId()));
+                    queriesDtoList.add(queriesDto1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по И.Ф.  "+queriesDTO.getStudentName());
-                model.addAttribute("findStudents",queriesDTOList);
+                model.addAttribute("findStudents", queriesDtoList);
 
                 break;
             case "findByGroup":
                 Objects.requireNonNull(findStudentInterface.findByStudentsGroupContainingIgnoreCase(queriesDTO.getStudentGroup())).forEach(st -> {
-                    QueriesDTO queriesDTO1 = new QueriesDTO();
-                    queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
-                    queriesDTOList.add(queriesDTO1);
+                    QueriesDto queriesDto1 = new QueriesDto();
+                    queriesDto1.setFindStudent(st);
+                    queriesDto1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDto1.getFindStudent().getId()));
+                    queriesDtoList.add(queriesDto1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по группе  "+queriesDTO.getStudentGroup());
-                model.addAttribute("findStudents",queriesDTOList);
+                model.addAttribute("findStudents", queriesDtoList);
 
                 break;
 
             case "findByBranch":
                 Objects.requireNonNull(findStudentInterface.findByBranchContainingIgnoreCase(queriesDTO.getStudentBranch())).forEach(st -> {
-                    QueriesDTO queriesDTO1 = new QueriesDTO();
-                    queriesDTO1.setFindStudent(st);
-                    queriesDTO1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDTO1.getFindStudent().getId()));
-                    queriesDTOList.add(queriesDTO1);
+                    QueriesDto queriesDto1 = new QueriesDto();
+                    queriesDto1.setFindStudent(st);
+                    queriesDto1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDto1.getFindStudent().getId()));
+                    queriesDtoList.add(queriesDto1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по отделению  "+queriesDTO.getStudentBranch());
-                model.addAttribute("findStudents",queriesDTOList);
+                model.addAttribute("findStudents", queriesDtoList);
 
                 break;
 
@@ -116,23 +116,23 @@ public class QueriesController {
                       findId.add(st.getStudentId());
                });
                    findId.forEach(st -> {
-                       QueriesDTO queriesDTO1 = new QueriesDTO();
-                       queriesDTO1.setFindStudent(findStudentInterface.findByIdLike(st));
-                       List<TestResultDTO> tests = new ArrayList<>();
+                       QueriesDto queriesDto1 = new QueriesDto();
+                       queriesDto1.setFindStudent(findStudentInterface.findByIdLike(st));
+                       List<TestResultDto> tests = new ArrayList<>();
                        findTestResultInterface.findByTestingDate(queriesDTO.getStudentDate()).forEach(qq -> {
                            if (qq.getStudentId().equals(st))
                            tests.add(qq);
                        });
-                       queriesDTO1.setStudentResult(tests);
-                       queriesDTOList.add(queriesDTO1);
+                       queriesDto1.setStudentResult(tests);
+                       queriesDtoList.add(queriesDto1);
                    });
                    model.addAttribute("info","Результаты выборки студентов по дате за "+ queriesDTO.getStudentDate());
-                model.addAttribute("findStudents",queriesDTOList);
+                model.addAttribute("findStudents", queriesDtoList);
 
                 break;
 
         }
-        if (queriesDTOList.size()==0)
+        if (queriesDtoList.size()==0)
             return "notFoundStudents";
 
 

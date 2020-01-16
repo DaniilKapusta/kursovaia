@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import test.DTO.AnswerDTO;
-import test.DTO.QuestDTO;
-import test.DTO.StudentDTO;
+import test.Dto.AnswerDto;
+import test.Dto.QuestDto;
+import test.Dto.StudentDto;
 import test.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ public class StudentController {
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public ModelAndView showForm() {
-        return new ModelAndView("student", "student", new StudentDTO());
+        return new ModelAndView("student", "student", new StudentDto());
     }
 
 @Autowired
@@ -43,26 +43,26 @@ public class StudentController {
     private SaveStudentInterface save;
 
     @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, ModelMap model, HttpServletRequest req) {
+    public String submit(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, ModelMap model, HttpServletRequest req) {
 
         logger.info("student = "+student.getName());
-        StudentDTO student1;
+        StudentDto student1;
         if (findStudentInterface.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch()) == null)
             student1 = save.saveStudent(student);
         else
         student1= findStudentInterface.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
        if (student1 !=null)
         logger.info("student = "+student1.getName());
-        List<QuestDTO> arrayDTO = new ArrayList<>();
+        List<QuestDto> arrayDTO = new ArrayList<>();
         findQuestionInterface.getRandomQuestions().forEach(setA -> {
 
-            QuestDTO questDTO = new QuestDTO();
+            QuestDto questDTO = new QuestDto();
             questDTO.setName(setA.getName());
             questDTO.setQuestionId(setA.getId());
 
-            List<AnswerDTO> answerDTOS = findAnswersInterface.findByQuestionIdLike(setA.getId());
+            List<AnswerDto> answerDtos = findAnswersInterface.findByQuestionIdLike(setA.getId());
             questDTO.setAnswers(new HashMap<>());
-            answerDTOS.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
+            answerDtos.forEach(answer -> questDTO.getAnswers().put(answer.getId(),answer.getBody()));
 
             arrayDTO.add(questDTO);
 

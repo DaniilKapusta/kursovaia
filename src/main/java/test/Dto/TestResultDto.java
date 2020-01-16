@@ -1,6 +1,6 @@
-package test.DTO;
+package test.Dto;
 
-public class TestResultDTO {
+public class TestResultDto {
     private Long id;
 
     private Long studentId;

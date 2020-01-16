@@ -1,7 +1,7 @@
 package test.service;
 
-import test.DTO.QuestionDTO;
+import test.Dto.QuestionDto;
 
 public interface SaveQuestionInterface {
-     QuestionDTO saveQuestion(QuestionDTO questionDTO);
+     QuestionDto saveQuestion(QuestionDto questionDTO);
 }

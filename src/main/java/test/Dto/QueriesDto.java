@@ -1,9 +1,9 @@
-package test.DTO;
+package test.Dto;
 
 
 import java.util.List;
 
-public class QueriesDTO {
+public class QueriesDto {
 
     private String findMethod;
     private String studentName;
@@ -11,25 +11,25 @@ public class QueriesDTO {
     private String studentBranch;
     private java.sql.Date studentDate;
 
-    private StudentDTO findStudent;
+    private StudentDto findStudent;
 
-    public StudentDTO getFindStudent() {
+    public StudentDto getFindStudent() {
         return findStudent;
     }
 
-    public void setFindStudent(StudentDTO findStudent) {
+    public void setFindStudent(StudentDto findStudent) {
         this.findStudent = findStudent;
     }
 
-    public List<TestResultDTO> getStudentResult() {
+    public List<TestResultDto> getStudentResult() {
         return studentResult;
     }
 
-    public void setStudentResult(List<TestResultDTO> studentResult) {
+    public void setStudentResult(List<TestResultDto> studentResult) {
         this.studentResult = studentResult;
     }
 
-    private List<TestResultDTO> studentResult;
+    private List<TestResultDto> studentResult;
 
     public String getFindMethod() {
         return findMethod;

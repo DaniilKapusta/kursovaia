@@ -1,11 +1,8 @@
-package test.DTO;
+package test.Dto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class QuestDTO {
+public class QuestDto {
 
     private String name;
 
@@ -18,7 +15,7 @@ public class QuestDTO {
 
 
 
-    public QuestDTO() {
+    public QuestDto() {
 
     }
 

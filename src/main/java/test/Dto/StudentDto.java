@@ -1,6 +1,6 @@
-package test.DTO;
+package test.Dto;
 
-public class StudentDTO {
+public class StudentDto {
     private Long id;
 
     private String name;
@@ -12,7 +12,7 @@ public class StudentDTO {
 
 
 
-    public StudentDTO() {
+    public StudentDto() {
     }
 
     public Long getId() {

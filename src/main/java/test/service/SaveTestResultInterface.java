@@ -1,7 +1,7 @@
 package test.service;
 
-import test.DTO.TestResultDTO;
+import test.Dto.TestResultDto;
 
 public interface SaveTestResultInterface {
-     void saveTestResult(TestResultDTO testResultDTO);
+     void saveTestResult(TestResultDto testResultDTO);
 }

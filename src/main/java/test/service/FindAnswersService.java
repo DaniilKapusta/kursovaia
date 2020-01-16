@@ -2,7 +2,7 @@ package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.DTO.AnswerDTO;
+import test.Dto.AnswerDto;
 import test.entity.AnswersEntity;
 import test.repository.AnswerRepository;
 
@@ -13,19 +13,19 @@ public class FindAnswersService implements FindAnswersInterface {
  @Autowired
     private AnswerRepository answerRepository;
 
-    public List<AnswerDTO> findByQuestionIdLike(Long questionId){
+    public List<AnswerDto> findByQuestionIdLike(Long questionId){
         List<AnswersEntity> answersEntities = answerRepository.findByQuestionIdLike(questionId);
-        List<AnswerDTO> answerDTOS = new ArrayList<>();
-        answersEntities.forEach(answer -> answerDTOS.add(mapEntityAnswerToDto(answer)));
-        return answerDTOS;
+        List<AnswerDto> answerDtos = new ArrayList<>();
+        answersEntities.forEach(answer -> answerDtos.add(mapEntityAnswerToDto(answer)));
+        return answerDtos;
     }
 
-    public AnswerDTO findByIdLike(Long id) {
+    public AnswerDto findByIdLike(Long id) {
         return mapEntityAnswerToDto(answerRepository.findByIdLike(id));
     }
 
-    private AnswerDTO mapEntityAnswerToDto(AnswersEntity answersEntity) {
-        AnswerDTO answerDTO = new AnswerDTO();
+    private AnswerDto mapEntityAnswerToDto(AnswersEntity answersEntity) {
+        AnswerDto answerDTO = new AnswerDto();
         answerDTO.setId(answersEntity.getId());
         answerDTO.setRight(answersEntity.getRight());
         answerDTO.setQuestionId(answersEntity.getQuestionId());
