@@ -15,6 +15,7 @@ public class TestResultEntity {
     private Integer mark;
     private Integer questionCount;
     private java.sql.Date testingDate;
+    private Long testId;
 
     public java.sql.Date getTestingDate() {
         return testingDate;
@@ -65,4 +66,11 @@ public class TestResultEntity {
         this.questionCount = questionCount;
     }
 
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
 }

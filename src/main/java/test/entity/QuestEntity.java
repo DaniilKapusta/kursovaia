@@ -15,6 +15,10 @@ public class QuestEntity  {
 
 
 
+    private Long testId;
+
+
+
     public QuestEntity() {
 
     }
@@ -29,5 +33,12 @@ public class QuestEntity  {
     public String getName() { return name; }
     public  void setName(String name) {this.name = name; }
 
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
 
 }
