@@ -13,9 +13,10 @@
         <div class="col"></div>
         <div class="col-md-auto">
 <h3 th:inline="text">Здравствуйте, [[${#httpServletRequest.remoteUser}]]!</h3>
-            <p><a class="btn btn-primary" href="addQuest" role="button">Создать вопрос</a></p>
-            <p><a class="btn btn-primary" href="queries" role="button">Выборки</a></p>
-
+            <p><a class="btn btn-primary" href="addQuest" role="button">Создать тест</a></p>
+            <form method="POST" action="queries" modelattribute="queries">
+            <p><input type="submit" class="btn btn-primary"  role="button" name="queries" value="Выборки"></p>
+            </form>
 <form th:action="@{/logout}" method="post">
     <input type="submit" class="btn btn-secondary" value="Выйти"/>
 </form>

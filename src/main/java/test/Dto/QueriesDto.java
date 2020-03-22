@@ -9,6 +9,12 @@ public class QueriesDto {
     private String studentName;
     private String studentGroup;
     private String studentBranch;
+
+    private String testName;
+
+
+
+    private Long testId;
     private java.sql.Date studentDate;
 
     private StudentDto findStudent;
@@ -69,6 +75,22 @@ public class QueriesDto {
 
     public void setStudentDate(java.sql.Date studentDate) {
         this.studentDate = studentDate;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 
 }

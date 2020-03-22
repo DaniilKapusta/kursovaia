@@ -1,5 +1,6 @@
 package test.Dto;
 
+import java.util.List;
 import java.util.Map;
 
 public class QuestDto {
@@ -8,7 +9,7 @@ public class QuestDto {
 
 
 
-    private Map<Long,String> answers;
+    private List<AnswerDto> answers;
 
     private Long questionId;
 
@@ -23,11 +24,11 @@ public class QuestDto {
     public String getName() { return name; }
     public  void setName(String name) {this.name = name; }
 
-    public Map<Long,String> getAnswers() {
+    public List<AnswerDto> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Map<Long,String> answers) {
+    public void setAnswers(List<AnswerDto> answers) {
         this.answers = answers;
     }
 

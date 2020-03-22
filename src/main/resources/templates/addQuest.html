@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Создание вопроса</title>
+    <title>Создание теста</title>
 </head>
 <body background="images/bg1.png" bgproperties="fixed">
 <div class="container" >
@@ -17,35 +17,17 @@
 
 
 <form method="POST"
-      action="questCreated" modelAttribute="addQuest">
+      action="testQuestions" modelAttribute="testQuestions">
         <div class="form-group">
             <h3>Создание вопроса</h3>
-         <label for = "name">Введите текст вопроса</label>
+         <label for = "name">Введите название теста</label>
             <input type="text" class="form-control" name ="name", id="name" required>
 
-       <p> <label for = "opt1">Введите Вариант ответа</label>
-        <input type="text" class="form-control" name ="opt1", id="opt1" required>
-            <input type="radio" name ="correctOption", id="correctOption1" value = "opt1" checked="true">
-           <label for = "correctOption1">Верный вариант ответа</label>
+       <p> <label for = "questionCount">Введите количество вопросов</label>
+        <input type="text" class="form-control" name ="questionCount", id="questionCount" required>
        </p>
-            <p>  <label for = "opt2">Введите вариант ответа</label>
-            <input type="text" class="form-control" name ="opt2", id="opt2" required>
-            <input type="radio" name ="correctOption", id="correctOption2" value = "opt2">
-                <label for = "correctOption2">Верный вариант ответа</label>
-            </p>
-
-            <p>  <label for = "opt3">Введите Вариант ответа</label>
-            <input type="text" class="form-control" name ="opt3", id="opt3" required>
-            <input type="radio" name ="correctOption", id="correctOption3" value = "opt3">
-                <label for = "correctOption3">Верный вариант ответа</label>
-            </p>
-            <p>   <label for = "opt4">Введите вариант ответа</label>
-            <input type="text" class="form-control" name ="opt4", id="opt4" required>
-            <input type="radio" name ="correctOption", id="correctOption4" value = "opt4" >
-                <label for = "correctOption4">Верный вариант ответа</label>
-            </p>
         </div>
-    <input type="submit" class="btn btn-primary" value="Создать вопрос">
+    <input type="submit" class="btn btn-primary" value="Создать тест">
 </form>
 
             <hr>

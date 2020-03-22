@@ -15,6 +15,7 @@ public class SaveQuestionService implements SaveQuestionInterface {
         QuestEntity questEntity = new QuestEntity();
         questEntity.setName(questionDTO.getName());
         questEntity =  questionRepository.save(questEntity);
+        questEntity.setTestId(questionDTO.getTestId());
         questionDTO.setId(questEntity.getId());
       return questionDTO;
     }

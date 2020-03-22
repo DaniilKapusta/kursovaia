@@ -41,6 +41,7 @@
 
         <tr th:each="results : ${find.studentResult}" >
             <td>  </td>
+            <td> Название теста <span th:text="${results.testName}">testName</span></td>
 
 
         <td> Оценка: <span th:text="${results.mark}">...</span></td>

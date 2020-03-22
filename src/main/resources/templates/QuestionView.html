@@ -21,7 +21,7 @@
     </div>
 
         <div class="col-md-auto">
-
+<h1 class="display-4"> Тест <span th:text="${testName}">TestName</span> </h1>
 
 <form method="POST"
     action="questEnd" modelAttribute="questEnd">
@@ -32,8 +32,8 @@
         <p th:each="answer : ${user.answers}">
 
 
-                 <input type="radio" th:name ="${user.questionId}" th:id="${answer.key}" th:value = "${answer.key}">
-            <label th:for = "${answer.key}" th:text="${answer.value}"> </label>
+                 <input type="radio" th:name ="${user.questionId}" th:id="${answer.id}" th:value = "${answer.id}">
+            <label th:for = "${answer.id}" th:text="${answer.body}"> </label>
 
         </p>
         </div>
@@ -43,6 +43,7 @@
     </th:block>
     <input type="text" th:value="${student1}" name="studentId" id="studentId" hidden="true">
     <input type="text" th:value="${questionCount}" name="questionCount" id="questionCount" hidden="true">
+    <input type="text" th:value="${testId}" name="testId" id="testId" hidden="false">
 
         <button type="submit" class="btn btn-primary" style="width:150px; height:70px;">Отправить</button>
 </form>

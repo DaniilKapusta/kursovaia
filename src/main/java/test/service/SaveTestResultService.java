@@ -18,6 +18,8 @@ public class SaveTestResultService implements SaveTestResultInterface {
         testResultEntity.setQuestionCount(testResultDTO.getQuestionCount());
         testResultEntity.setStudentId(testResultDTO.getStudentId());
         testResultEntity.setTestingDate(testResultDTO.getTestingDate());
+        testResultEntity.setTestId(testResultDTO.getTestId());
+        testResultEntity.setTestName(testResultDTO.getTestName());
        testResultRepository.save(testResultEntity);
     }
 }
