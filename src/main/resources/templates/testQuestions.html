@@ -23,10 +23,11 @@
                     <input type="text" name = "questionCount" id = "questionCount" th:value="${questionCount}"  hidden = "false">
                     <input type="text" name = "questionNumber" id = "questionNumber" th:value="${questionNumber}" hidden = "false">
                     <h3>Создание вопроса</h3>
+                    <h4>Вопрос №<span th:text="${qN}">question number</span></h4>
                     <label for = "name">Введите текст вопроса</label>
                     <input type="text" class="form-control" name ="name", id="name" required>
 
-                    <p> <label for = "opt1">Введите Вариант ответа</label>
+                    <p> <label for = "opt1">Введите вариант ответа</label>
                         <input type="text" class="form-control" name ="opt1", id="opt1" required>
                         <input type="radio" name ="correctOption", id="correctOption1" value = "opt1" checked="true">
                         <label for = "correctOption1">Верный вариант ответа</label>
@@ -37,7 +38,7 @@
                         <label for = "correctOption2">Верный вариант ответа</label>
                     </p>
 
-                    <p>  <label for = "opt3">Введите Вариант ответа</label>
+                    <p>  <label for = "opt3">Введите вариант ответа</label>
                         <input type="text" class="form-control" name ="opt3", id="opt3" required>
                         <input type="radio" name ="correctOption", id="correctOption3" value = "opt3">
                         <label for = "correctOption3">Верный вариант ответа</label>

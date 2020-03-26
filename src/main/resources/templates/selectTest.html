@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Создание теста</title>
+    <title>Выбор теста</title>
 </head>
 <body background="images/bg1.png" bgproperties="fixed">
 <div class="container" >
@@ -14,20 +14,23 @@
 
         </div>
         <div class="col-md-auto">
+            <h1>Выберите тест, который хотите пройти.</h1>
             <form method="POST" action="QuestionView" modelattribute="selectTest">
                 <div class="form-group">
         <p>
-    <select name="testSelect">
+            <div class="dropdown">
+    <select name="testSelect" >
 <p th:each="test:${tests}" >
 
     <option  th:value="${test.id}" th:label="${test.name}">...</option>
 </p>
 </select>
+                </div>
 
 </p>
                 </div>
                 <input type="text" th:value="${student1}" name="studentId" id="studentId" hidden="true">
-                <input type="submit" class="btn btn-primary" value="Выбрать тест">
+                <input type="submit" class="btn btn-primary" value="Начать тест">
 
             </form>
         </div>

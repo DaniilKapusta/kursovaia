@@ -103,6 +103,7 @@ public class QuestController {
         model.addAttribute("testId",testDTO.getId());
         model.addAttribute("questionNumber", testDTO.getQuestionCount());
         model.addAttribute("questionCount", testDTO.getQuestionCount());
+        model.addAttribute("qN",1);
 
         return "testQuestions";
     }

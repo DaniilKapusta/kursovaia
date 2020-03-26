@@ -96,12 +96,14 @@ public class testQuestionsController {
             }
         }
         questionNumber--;
+        Integer qN = Integer.parseInt(answers.get("questionCount")[0])-questionNumber+1;
         if (questionNumber == 0) {
             return "questCreated";
         } else {
             model.addAttribute("testId",answers.get("testId")[0]);
             model.addAttribute("questionCount", answers.get("questionCount")[0]);
             model.addAttribute("questionNumber",questionNumber);
+            model.addAttribute("qN",qN);
             return "testQuestions";
         }
     }
