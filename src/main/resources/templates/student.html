@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="">
 <head>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +16,7 @@
 <h3>Перед началом теста введите свои данные</h3>
         <hr>
 <form method="POST"
-      action="QuestionView" modelAttribute="student">
+      action="selectTest" modelAttribute="student">
 
        <fieldset>
       <p> <label for = "name">Введите имя и фамилию</label>
@@ -25,8 +25,10 @@
           <input type="text" name ="studentsGroup", id="studentsGroup" required pattern="[1-4][\-][0-9]{2}"></p>
      <p>  <label for = "branch">Введите отделение</label>
          <input type="text" name ="branch", id="branch" required pattern="[A-ZА-ЯЁ]{2,5}"> </p>
+
+
     </fieldset>
-    <input type="submit" value="Начать тест">
+    <input class="btn btn-primary" type="submit" value="Выбор теста">
 </form>
     </div>
         <div class="col">

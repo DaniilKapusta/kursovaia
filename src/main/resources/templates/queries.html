@@ -51,6 +51,21 @@
     <p> <input type="date" name="testingDate" id="testingDate" required>
     <input type="submit" class="btn btn-primary" value="Поиск">
 </form>
+
+            <form method="POST"
+                  action="queriesFind" modelAttribute="queries">
+                <header><h2>Поиск по пройденному тесту</h2></header>
+                <input type="text" value="findByTest" name="findMethod" hidden="true">
+                <select name="testId">
+                    <p th:each="test:${tests}">
+                        <option  th:value="${test.id}" th:label="${test.name}">...</option>
+                    </p>
+                </select>
+
+
+                    <input type="submit" class="btn btn-primary" value="Поиск">
+            </form>
+
             <hr>
             <p><a class="btn btn-primary" href="teacher" role="button">Вернуться к интерфейсу учителя</a></p>
             <hr>

@@ -36,6 +36,9 @@ public class QuestEndController {
     @Autowired
     private SaveTestResultInterface saveTestResultInterface;
 
+    @Autowired
+    private FindTestInterface findTestInterface;
+
 
     @RequestMapping(value = "/questEnd", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("questEnd") TestResultDto testResultDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
@@ -110,7 +113,9 @@ public class QuestEndController {
         testResultDTO.setMark(mark);
         logger.info(String.valueOf(testResultDTO.getStudentId()));
         testResultDTO.setTestingDate(new java.sql.Date(System.currentTimeMillis()));
+        testResultDTO.setTestName(findTestInterface.findByIdLike(testResultDTO.getTestId()).getName());
         saveTestResultInterface.saveTestResult(testResultDTO);
+        model.addAttribute("testName", findTestInterface.findByIdLike(testResultDTO.getTestId()).getName());
 
             model.addAttribute("questionCount",testResultDTO.getQuestionCount());
             model.addAttribute("answerStat", answersStatDtos);

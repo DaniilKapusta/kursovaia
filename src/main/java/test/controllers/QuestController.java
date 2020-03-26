@@ -13,8 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import test.Dto.AnswerDto;
 import test.Dto.QuestDto;
 import test.Dto.QuestionDto;
+import test.Dto.TestDTO;
 import test.service.SaveAnswerInterface;
 import test.service.SaveQuestionInterface;
+import test.service.SaveTestInterface;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,23 +28,25 @@ public class QuestController {
    private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private SaveQuestionInterface saveQuestionInterface;
-
+    private SaveTestInterface saveTest;
+/*
     @Autowired
     private SaveAnswerInterface saveAnswerInterface;
-
+*/
     @RequestMapping(value = "/addQuest", method = RequestMethod.GET)
     public ModelAndView showForm() {
         return new ModelAndView("addQuest", "addQuest", new QuestDto());
     }
 
-    @RequestMapping(value = "/questCreated", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("addQuest") QuestDto quest, BindingResult result, ModelMap model, HttpServletRequest req) {
+    @RequestMapping(value = "/testQuestions", method = RequestMethod.POST)
+    public String submit(@Valid @ModelAttribute("addQuest") TestDTO testDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
         if (result.hasErrors()) {
             return "error";
         }
-        Map<String, String[]> answers = req.getParameterMap();
+        Map<String, String[]> test = req.getParameterMap();
+        testDTO.setId(saveTest.saveTest(testDTO).getId());
 
+/*
         QuestionDto questionDTO = new QuestionDto();
         questionDTO.setName(answers.get("name")[0]);
         QuestionDto savedQuestion = saveQuestionInterface.saveQuestion(questionDTO);
@@ -86,15 +90,21 @@ public class QuestController {
             answerDto4.setRight(false);
         }
         saveAnswerInterface.saveAnswer(answerDto4);
+*/
 
-
-        for (String key : answers.keySet()) {
-            String[] strArr = answers.get(key);
+        for (String key : test.keySet()) {
+            String[] strArr = test.get(key);
             for (String val : strArr) {
                 logger.info(key + " = " + val);
             }
         }
+        logger.info(testDTO.getName());
+        logger.info(Integer.toString(testDTO.getQuestionCount()));
+        model.addAttribute("testId",testDTO.getId());
+        model.addAttribute("questionNumber", testDTO.getQuestionCount());
+        model.addAttribute("questionCount", testDTO.getQuestionCount());
+        model.addAttribute("qN",1);
 
-        return "questCreated";
+        return "testQuestions";
     }
 }

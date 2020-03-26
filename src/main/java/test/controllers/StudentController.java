@@ -41,8 +41,10 @@ public class StudentController {
     private FindStudentInterface findStudentInterface;
 @Autowired
     private SaveStudentInterface save;
+@Autowired
+private FindTestInterface findTestInterface;
 
-    @RequestMapping(value = "/QuestionView", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectTest", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, ModelMap model, HttpServletRequest req) {
 
         logger.info("student = "+student.getName());
@@ -51,7 +53,7 @@ public class StudentController {
             student1 = save.saveStudent(student);
         else
         student1= findStudentInterface.findByNameAndStudentsGroupAndBranchContainingIgnoreCase(student.getName(),student.getStudentsGroup(),student.getBranch());
-       if (student1 !=null)
+    /*   if (student1 !=null)
         logger.info("student = "+student1.getName());
         List<QuestDto> arrayDTO = new ArrayList<>();
         findQuestionInterface.getRandomQuestions().forEach(setA -> {
@@ -67,16 +69,16 @@ public class StudentController {
             arrayDTO.add(questDTO);
 
         } );
+
+
         model.addAttribute("quest",arrayDTO);
+
+     */
+        model.addAttribute("tests",findTestInterface.findAll());
         if (student1 != null)
         model.addAttribute("student1",student1.getId());
-        model.addAttribute("questionCount",arrayDTO.size());
-        model.addAttribute("studentName",student.getName());
-        if (arrayDTO.size()<10) {
-            String error = (String.format("Необходимо ещё %d вопросов", 10-arrayDTO.size()));
-            model.addAttribute("error",error);
-            return "errorSmallSize";
-        }
-        return "QuestionView";
+       // model.addAttribute("questionCount",arrayDTO.size());
+     //   model.addAttribute("studentName",student.getName());
+        return "selectTest";
     }
 }

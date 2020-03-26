@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import test.Dto.QueriesDto;
 import test.Dto.TestResultDto;
 import test.service.FindStudentInterface;
+import test.service.FindTestInterface;
 import test.service.FindTestResultInterface;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,8 @@ public class QueriesController {
 
     @Autowired
     private FindTestResultInterface findTestResultInterface;
+    @Autowired
+    private FindTestInterface findTestInterface;
 
     @RequestMapping(value = "/queriesFind", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("queries") QueriesDto queriesDTO, BindingResult result, ModelMap model, HttpServletRequest req) {
@@ -74,6 +77,7 @@ public class QueriesController {
                     QueriesDto queriesDto1 = new QueriesDto();
                     queriesDto1.setFindStudent(st);
                     queriesDto1.setStudentResult(findTestResultInterface.findByStudentIdLike(queriesDto1.getFindStudent().getId()));
+
                     queriesDtoList.add(queriesDto1);
                 });
                 model.addAttribute("info","Результаты выборки студентов по И.Ф.  "+queriesDTO.getStudentName());
@@ -131,6 +135,30 @@ public class QueriesController {
 
                 break;
 
+            case "findByTest":
+                findId = new ArrayList<>();
+                findTestResultInterface.findByTestIdLike(queriesDTO.getTestId()).forEach(st -> {
+                    if (!findId.contains(st.getStudentId()))
+                        findId.add(st.getStudentId());
+                });
+                findId.forEach(st -> {
+                    QueriesDto queriesDto1 = new QueriesDto();
+                    queriesDto1.setFindStudent(findStudentInterface.findByIdLike(st));
+                    List<TestResultDto> tests = new ArrayList<>();
+                    findTestResultInterface.findByTestIdLike(queriesDTO.getTestId()).forEach(qq -> {
+                        if (qq.getStudentId().equals(st))
+                            tests.add(qq);
+                    });
+                    queriesDto1.setStudentResult(tests);
+                    queriesDtoList.add(queriesDto1);
+                });
+                queriesDTO.setTestName(findTestInterface.findByIdLike(queriesDTO.getTestId()).getName());
+                model.addAttribute("info","Результаты выборки студентов по тесту "+ queriesDTO.getTestName());
+                model.addAttribute("findStudents", queriesDtoList);
+
+
+
+                break;
         }
         if (queriesDtoList.size()==0)
             return "notFoundStudents";

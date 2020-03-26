@@ -5,13 +5,13 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Конец теста</title>
+    <title>Результаты теста</title>
 </head>
 <body background="images/bg1.png" bgproperties="fixed">
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Статистика теста</h1>
-        <p class="lead">Вы прошли тест. Теперь вы можете посмотреть результаты.</p>
+        <p class="lead">Вы прошли тест <span th:text="${testName}">testName</span>. Теперь вы можете посмотреть результаты.</p>
     </div>
 </div>
 <div class="container">

@@ -9,6 +9,14 @@ public class TestResultDto {
     private Integer questionCount;
     private java.sql.Date testingDate;
 
+
+
+    private Long testId;
+
+
+
+    private String testName;
+
     public java.sql.Date getTestingDate() {
         return testingDate;
     }
@@ -58,4 +66,19 @@ public class TestResultDto {
         this.questionCount = questionCount;
     }
 
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
 }

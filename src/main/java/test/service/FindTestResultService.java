@@ -30,6 +30,13 @@ public class FindTestResultService implements FindTestResultInterface {
         return testResultDtos;
     }
 
+    public List<TestResultDto> findByTestIdLike(Long testId) {
+        List<TestResultEntity> testResultEntities = testResultRepository.findByTestIdLike(testId);
+        List<TestResultDto> testResultDtos = new ArrayList<>();
+        testResultEntities.forEach(result -> testResultDtos.add(mapTestResultEntityToDto(result)));
+        return testResultDtos;
+    }
+
     private TestResultDto mapTestResultEntityToDto(TestResultEntity testResultEntity) {
         TestResultDto testResultDTO = new TestResultDto();
         testResultDTO.setId(testResultEntity.getId());
@@ -38,6 +45,8 @@ public class FindTestResultService implements FindTestResultInterface {
         testResultDTO.setQuestionCount(testResultEntity.getQuestionCount());
         testResultDTO.setStudentId(testResultEntity.getStudentId());
         testResultDTO.setTestingDate(testResultEntity.getTestingDate());
+        testResultDTO.setTestId(testResultEntity.getTestId());
+        testResultDTO.setTestName(testResultEntity.getTestName());
         return testResultDTO;
     }
  }

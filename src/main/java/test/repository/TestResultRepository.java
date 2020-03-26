@@ -10,8 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TestResultRepository extends CrudRepository<TestResultEntity,Long> {
-    public List<TestResultEntity> findByStudentIdLike(Long studentId);
+    List<TestResultEntity> findByStudentIdLike(Long studentId);
 
-    public List<TestResultEntity> findByTestingDate(Date testingDate);
+    List<TestResultEntity> findByTestingDate(Date testingDate);
+    List<TestResultEntity> findByTestIdLike(Long testId);
 
 }
