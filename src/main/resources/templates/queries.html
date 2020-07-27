@@ -57,8 +57,8 @@
                 <header><h2>Поиск по пройденному тесту</h2></header>
                 <input type="text" value="findByTest" name="findMethod" hidden="true">
                 <select name="testId">
-                    <p th:each="test:${tests}">
-                        <option  th:value="${test.id}" th:label="${test.name}">...</option>
+                    <p th:each="Kurs:${tests}">
+                        <option th:value="${Kurs.id}" th:label="${Kurs.name}">...</option>
                     </p>
                 </select>
 

@@ -20,9 +20,9 @@
         <p>
             <div class="dropdown">
     <select name="testSelect" >
-<p th:each="test:${tests}" >
+<p th:each="Kurs:${tests}" >
 
-    <option  th:value="${test.id}" th:label="${test.name}">...</option>
+    <option th:value="${Kurs.id}" th:label="${Kurs.name}">...</option>
 </p>
 </select>
                 </div>
